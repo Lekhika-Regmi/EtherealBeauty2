@@ -1,0 +1,17 @@
+[
+    {
+      "customer_id": 1,
+      "username": "testuser1",
+      "phone_no": "9812345678",
+      "password": "$2a$10$u6G3EoR5u3R3Vx7Yg7V4beFLh8Nq6ECLOZPvT0nW0m7vL5TbOKHhG", 
+      "email": "testuser1@example.com"
+    },
+    {
+      "customer_id": 2,
+      "username": "testuser2",
+      "phone_no": "9809876543",
+      "password": "$2a$10$YfEobZRL5eH5gGJp4Z8TkO4u1F/NzgfzgPv4i23yL8kmQ4TgErzQW", 
+      "email": "testuser2@example.com"
+    }
+  ]
+  
