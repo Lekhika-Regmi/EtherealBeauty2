@@ -19,6 +19,7 @@ import ProductPage from "../pages/products/ProductPage";
 import SingleProduct from "../pages/products/SingleProduct";
 import PaymentSuccess from "../pages/orders/PaymentSuccess";
 import ViewOrders from "../pages/orders/ViewOrders";
+import CustomerPublicRoute from "./CustomerPublicRoute";
 
 // Vendor Pages
 import Vendor from "../pages/layout/Vendor";
@@ -33,16 +34,18 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route path={routes.home} element={user?.role === "vendor" ? <Navigate to="/vendor/dashboard" replace /> : <Home />} />
-      <Route path={routes.about} element={<About />} />
-      <Route path={routes.contact} element={<Contact />} />
-      <Route path={routes.search} element={<Search />} />
-      <Route path={routes.brands} element={<BrandPage />} />
-      <Route path={routes.webcam} element={<WebcamCapture />} />
-      <Route path={routes.product} element={<ProductPage />} />
-      <Route path={routes.singleProduct} element={<SingleProduct />} />
-      <Route path={routes.payment} element={<PaymentSuccess />} />
+    {/* Public Routes accessible to non-vendors */}
+    <Route element={<CustomerPublicRoute />}>
+        <Route path={routes.home} element={<Home />} />
+        <Route path={routes.about} element={<About />} />
+        <Route path={routes.contact} element={<Contact />} />
+        <Route path={routes.search} element={<Search />} />
+        <Route path={routes.brands} element={<BrandPage />} />
+        <Route path={routes.webcam} element={<WebcamCapture />} />
+        <Route path={routes.product} element={<ProductPage />} />
+        <Route path={routes.singleProduct} element={<SingleProduct />} />
+        <Route path={routes.payment} element={<PaymentSuccess />} />
+      </Route>
 
       {/* Authentication Routes */}
       <Route element={<PublicRoute />}>
@@ -69,7 +72,7 @@ const AppRouter = () => {
       </Route>
 
       {/* Redirect unknown routes */}
-      {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

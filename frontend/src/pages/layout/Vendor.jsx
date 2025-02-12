@@ -9,7 +9,7 @@ function Vendor() {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="flex">
                 {/* Sidebar */}
                 <DashboardSideBar />
