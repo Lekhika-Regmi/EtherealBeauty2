@@ -20,13 +20,22 @@ import SingleProduct from "../pages/products/SingleProduct";
 import PaymentSuccess from "../pages/orders/PaymentSuccess";
 import ViewOrders from "../pages/orders/ViewOrders";
 import CustomerPublicRoute from "./CustomerPublicRoute";
-import SuperAdminDashboard from "../components/superadmin/SuperAdminLayout";
 // Vendor Pages
 import Vendor from "../pages/layout/Vendor";
 import VendorDashboard from "../pages/layout/DashboardSideBar";
 import CreateProduct from "../pages/shop/CreateProduct";
 import AllProducts from "../pages/shop/AllProducts";
 import EditProducts from "../pages/shop/EditProducts";
+// Super Admin Pages
+import SuperAdminLayout from "../components/superadmin/SuperAdminLayout";
+import Dashboard from "../pages/superadmin/Dashboard";
+import Aproducts from "../pages/superadmin/Aproducts";
+import Customers from "../pages/superadmin/Customers";
+import Vendors from "../pages/superadmin/Vendors";
+import ApprovedVendors from "../pages/superadmin/Inventory";
+import SuperOrders from "../pages/superadmin/SuperOrders";
+// import Settings from "../pages/superadmin/Settings";
+
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
@@ -50,11 +59,13 @@ const AppRouter = () => {
       {/* Authentication Routes */}
       <Route element={<PublicRoute />}>
         <Route path={routes.login} element={<Login />} />
+       
         <Route path={routes.register} element={<Register />}>
           <Route path="customer" element={<CustomerReg />} />
           <Route path="vendor" element={<VendorReg />} />
         </Route>
       </Route>
+      
 
       {/* Customer Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["customer"]} />}>
@@ -62,6 +73,23 @@ const AppRouter = () => {
         <Route path={routes.orders} element={<ViewOrders />} />
       </Route>
 
+        {/* Super Admin Routes */}
+  <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
+  <Route element={<SuperAdminLayout />}>
+    <Route path={routes.superadmin.dashboard} element={<Dashboard />} />
+    <Route path={routes.superadmin.products} element={<Aproducts />} />
+    <Route path={routes.superadmin.customers} element={<Customers />} />
+   
+    {/* Vendor Management Routes */}
+    <Route path={routes.superadmin.pendingVendors} element={<Vendors />} />
+    <Route path={routes.superadmin.approvedVendors} element={<ApprovedVendors />} />
+
+    <Route path={routes.superadmin.orders} element={<SuperOrders />} />
+    {/* <Route path={routes.superadmin.settings} element={<Settings />} /> */}
+  </Route>
+
+
+ </Route>
       {/* Vendor Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
         <Route path={routes.vendor} element={<Vendor />} />
@@ -71,18 +99,7 @@ const AppRouter = () => {
         <Route path={routes.vendorEditProduct} element={<EditProducts />} />
       </Route>
 
-  {/* Super Admin Routes */}
-  <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
-        {/* <Route element={<SuperAdminLayout />}> */}
-          {/* <Route path={routes.superadminDashboard} element={<SuperAdminDashboard />} /> */}
-          {/* <Route path={routes.superadmin.products} element={<SuperAdminProducts />} />
-  <Route path={routes.superadmin.vendors} element={<SuperAdminVendors />} />
-  <Route path={routes.superadmin.customers} element={<SuperAdminCustomers />} />
-  <Route path={routes.superadmin.inventory} element={<SuperAdminInventory />} />
-  <Route path={routes.superadmin.reports} element={<SuperAdminReports />} />
-  <Route path={routes.superadmin.settings} element={<SuperAdminSettings />} /> */}
-        {/* </Route> */}
-      </Route>
+ 
 
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />
@@ -92,3 +109,4 @@ const AppRouter = () => {
 
 
 export default AppRouter;
+

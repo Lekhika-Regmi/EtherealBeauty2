@@ -9,8 +9,7 @@ const Checkout = () => {
   if (!user) {
     return <p className="text-center text-gray-500">Please log in to proceed with checkout.</p>;
   }
-  const customerId = user.customer?.id;
-  console.log("customer",customerId);
+
 const [province, setProvince] = useState("");
 const [district, setDistrict] = useState("");
 const [municipality, setMunicipality] = useState("");

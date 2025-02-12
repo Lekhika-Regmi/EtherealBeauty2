@@ -1,22 +1,25 @@
-// src/layouts/SuperAdminLayout.jsx
-import { useState } from 'react';
-import Header from '../../pages/superadmin/Header';
-import Sidebar from '../../pages/superadmin/Sidebar';
-import Home from '../../pages/superadmin/Home';
-import IconComponent from '../../pages/superadmin/IconComponent';
-const SuperAdminLayout = ({ children }) => {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+import React, { useState } from 'react';
+// import { Outlet } from 'react-router-dom';
 
-  const OpenSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle);
-  };
+
+// import './App.css'
+import Navbar from './SuperadminNavbar';
+import DashboardSideBar from '../../pages/superadmin/DashboardSideBar';
+
+const SuperAdminLayout = () => {
 
   return (
-    <div className='grid-container'>
-      <Header OpenSidebar={OpenSidebar} />
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
-      <Home /> 
-         </div>
+    <>
+    <Navbar/>
+    <div className="flex">
+                {/* Sidebar */}
+                <DashboardSideBar />
+                {/* Main content */}
+                <div className="flex-1">
+                    {/* <Outlet /> This will render the CreateProduct component */}
+                </div>
+            </div>
+    </>
   );
 };
 

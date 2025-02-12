@@ -23,15 +23,18 @@ const routes = {
   vendorEditProduct: "/vendor/edit-product/:id",
 
   //superadmin routes 
-  superadmin: "/superadmin",
-  superadminDashboard: "/superadmin/dashboard",
-  dashboard: "/superadmin/dashboard",
-  products: "/superadmin/products",
-  vendors: "/superadmin/vendors",
-  customers: "/superadmin/customers",
-  inventory: "/superadmin/inventory",
-  reports: "/superadmin/reports",
-  settings: "/superadmin/settings"
+  superadmin: {
+    dashboard: "/superadmin/dashboard",
+    products: "/superadmin/products",
+    vendors: "/superadmin/vendors",
+    customers: "/superadmin/customers",
+    inventory: "/superadmin/inventory",
+    reports: "/superadmin/reports",
+    orders: "/superadmin/orders",
+    settings: "/superadmin/settings",
+    pendingVendors: "/superadmin/vendors/pending",
+    approvedVendors: "/superadmin/vendors/approved"
+  }
 };
 
 export default routes;
