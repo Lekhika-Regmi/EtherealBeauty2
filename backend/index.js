@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const sequelize = require("./src/database/db.config"); // Use Sequelize instance from db.config
 const path = require("path");
+require('./src/database/association');
+
 const user = require("./src/users/users.model");
 
 const port = process.env.PORT || 5000; // Use PORT from .env
@@ -31,6 +33,8 @@ const productRoutes = require("./src/products/products.route");
 const orderRoutes = require("./src/orders/orders.route");
 const paymentRoutes = require("./src/orders/payment.route");
 const skinTest = require("./src/skinDetection/skinTest");
+const orderItemsRoutes = require('./src/orders/orderItems.route');
+
 // const sequelize = require('./src/database/db.config.js');
 const customerRoutes = require("./src/users/customer/customerRoutes");
 const vendorRoutes = require('./src/users/vendor/vendorRoutes');
@@ -45,6 +49,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes); //this is the baseurl for products
 app.use("/api/skin", skinTest); // Linking the skinTest API route
 app.use("/api/payment", paymentRoutes); // Linking the payment
+app.use('/api/orderitems', orderItemsRoutes);
 
 
 app.use("/api/auth", authRoutes);
