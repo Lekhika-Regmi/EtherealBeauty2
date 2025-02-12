@@ -6,16 +6,19 @@ const Dashboard = () => {
   const [totalProducts, setTotalProducts] = useState(null);  // State for total products
   const [totalOrders, setTotalOrders] = useState(null);  // State for total orders
   const [error, setError] = useState(null);
+  // const vendorId = localStorage.getItem("vendorId"); // Get vendorId from localStorage
+  const vendorId = 1; // Static vendorId for testing
+
 
   useEffect(() => {
     // Fetch total products and total orders when the component is mounted
     const fetchDashboardData = async () => {
       try {
-        const productResponse = await axios.get(`${getBaseUrl()}/api/products/total-vendor-products`);
+        const productResponse = await axios.get(`${getBaseUrl()}/api/products/total-vendor-products/${vendorId}`);
         setTotalProducts(productResponse.data.totalProducts);
 
-        // const orderResponse = await axios.get(`${getBaseUrl()}/api/orders/total-orders`);  // Assuming your backend has an API for total orders
-        // setTotalOrders(orderResponse.data.totalOrders);
+        const orderResponse = await axios.get(`${getBaseUrl()}/api/orders/vendor/${vendorId}/total-orders`);
+        setTotalOrders(orderResponse.data.totalOrders);
         
       } catch (err) {
         setError("Error fetching dashboard data");

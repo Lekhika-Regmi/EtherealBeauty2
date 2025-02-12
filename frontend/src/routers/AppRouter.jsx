@@ -27,6 +27,9 @@ import VendorDashboard from "../pages/layout/DashboardSideBar";
 import CreateProduct from "../pages/shop/CreateProduct";
 import AllProducts from "../pages/shop/AllProducts";
 import EditProducts from "../pages/shop/EditProducts";
+import Inventory from "../pages/shop/Inventory";
+import Orders from "../pages/shop/Orders";
+
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
@@ -34,8 +37,8 @@ const AppRouter = () => {
 
   return (
     <Routes>
-    {/* Public Routes accessible to non-vendors */}
-    <Route element={<CustomerPublicRoute />}>
+      {/* Public Routes accessible to non-vendors */}
+      <Route element={<CustomerPublicRoute />}>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.about} element={<About />} />
         <Route path={routes.contact} element={<Contact />} />
@@ -69,7 +72,14 @@ const AppRouter = () => {
         <Route path={routes.vendorCreateProduct} element={<CreateProduct />} />
         <Route path={routes.vendorProducts} element={<AllProducts />} />
         <Route path={routes.vendorEditProduct} element={<EditProducts />} />
+        <Route path={routes.vendorInventory} element={<Inventory />} />
+        <Route path={routes.vendorOrders} element={<Orders />} />
       </Route>
+
+
+      {/* <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
+    //here all superadmin ko routes
+      </Route> */}
 
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />

@@ -16,11 +16,12 @@ const routes = {
   // Vendor Routes
   
   vendor: "/vendor",
-  vendorOrders: "/vendor/dashboard-orders",
-  vendorDashboard: "/vendor/dashboard",
+  vendorDashboard: "/vendor/Dashboard",
   vendorCreateProduct: "/vendor/dashboard-create-product",
   vendorProducts: "/vendor/dashboard-products",
   vendorEditProduct: "/vendor/edit-product/:id",
+  vendorInventory: "/vendor/inventory",
+  vendorOrders: "/vendor/dashboard-orders",
 };
 
 export default routes;
