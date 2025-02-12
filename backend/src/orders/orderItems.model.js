@@ -51,6 +51,11 @@ const OrderItem = sequelize.define(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.STRING, // Ensure this column exists
+      allowNull: false,
+      defaultValue: "pending",
+    },
   },
   {
     timestamps: false, // No automatic timestamps
@@ -58,10 +63,6 @@ const OrderItem = sequelize.define(
   }
 );
 
-// Sync the table
-// (async () => {
-//   await sequelize.sync({ alter: true });
-//   console.log("OrderItems table synced!");
-// })();
+
 
 module.exports = OrderItem;

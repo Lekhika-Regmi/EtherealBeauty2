@@ -77,7 +77,8 @@ const DashboardSideBar = ({ active }) => {
             </div>
 
             <div className="w-full flex items-center p-4">
-                <Link to="/vendor/dashboard-create-events" className="w-full flex items-center gap-2">
+                <Link to="/vendor/inventory
+                " className="w-full flex items-center gap-2">
                     <VscNewFile
                         size={30}
                         color={'${active === 6 ? "crimson" : "#555"}'} />
@@ -85,7 +86,7 @@ const DashboardSideBar = ({ active }) => {
                         className={`pl-2 text-[18px] font-[400] ${active === 6 ? "text-[crimson]" : "text-[black]"
                             }`}
                     >
-                        Payments 
+                        Inventory 
                     </h5>
                 </Link>
             </div>

@@ -20,9 +20,7 @@ const Navbar = () => {
           <li className="link">
             <Link to="/"> Home </Link>
           </li>
-          <li className="link">
-            <Link to="/pages"> Pages </Link>
-          </li>
+  
           <li className="link">
             <Link to="/contact"> Contact </Link>
           </li>
@@ -32,11 +30,7 @@ const Navbar = () => {
           <Link to="/"> Ethereal Beauty</Link>
         </div>
         <div className="nav__icons relative">
-          <span>
-            <Link to="/search">
-              <i className="ri-search-line"></i>
-            </Link>
-          </span>
+          
           <span>
             <span className="relative">
               <button
@@ -56,12 +50,12 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <>
-                      <Link
+                      {/* <Link
                         to="/profile"
                         className="block px-4 py-2 text-black hover:bg-gray-100"
                       >
                         View Profile
-                      </Link>
+                      </Link> */}
                       {/* <Link to="/orders" className="block px-4 py-2 text-black hover:bg-gray-100">
                                            Orders
                                          </Link> */}

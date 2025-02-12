@@ -147,36 +147,42 @@ router.post("/create-product", async (req, res) => {
 
 router.patch("/update-product/:id", upload.single('image'), async (req, res) => {
   try {
-    const imageUrl = req.file ? `/uploads/products/${req.file.filename}` : req.body.image;
-
-    const updatedProduct = await Product.update(
-      {
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        brand: req.body.brand,
-        skin_type_suitability: req.body.skin_type_suitability,
-        image: imageUrl, // Make sure image URL is updated in the database
-      },
-      {
-        where: { product_id: req.params.id }
-      }
-    );
-
-    if (!updatedProduct[0]) {
+    const product = await Product.findByPk(req.params.id);
+    if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    // Fetch the updated product and return it
-    const updatedProductData = await Product.findOne({ where: { product_id: req.params.id } });
+
+    // Update data from the form
+    const updateData = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      category: req.body.category,
+      skin_type_suitability: req.body.skin_type_suitability,
+      brand: req.body.brand,
+      stock: req.body.stock,
+    };
+
+    // Handle image update
+    if (req.file) {
+      // If new image uploaded
+      updateData.image = `/uploads/products/${req.file.filename}`;
+    } else if (req.body.existingImage) {
+      // Keep existing image
+      updateData.image = req.body.existingImage;
+    }
+
+    await product.update(updateData);
+
     res.status(200).json({
       message: "Product updated successfully",
-      product: updatedProductData, // Send back the entire updated product object
+      product: product
     });
   } catch (error) {
+    console.error('Update error:', error);
+    res.status(500).json({ message: "Error updating product" });
   }
 });
-
 
 
 // ✅ Get a single product by ID
@@ -250,6 +256,34 @@ router.get("/related/:category", async (req, res) => {
   } catch (error) {
     console.error("Error fetching related products:", error);
     res.status(500).json({ message: "Failed to fetch related products" });
+  }
+});
+
+router.get('/vendor/:vendorId/inventory', async (req, res) => {
+  try {
+    const products = await Product.findAll({
+      where: { vendor_id: req.params.vendorId },
+      attributes: ['product_id', 'name', 'price', 'stock', 'image']
+    });
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching inventory:', error);
+    res.status(500).json({ error: 'Failed to fetch inventory' });
+  }
+});
+
+router.put('/update-stock/:productId', async (req, res) => {
+  try {
+    const product = await Product.findByPk(req.params.productId);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    await product.update({ stock: req.body.stock });
+    res.json({ message: 'Stock updated successfully', currentStock: product.stock });
+  } catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ error: 'Failed to update stock' });
   }
 });
 

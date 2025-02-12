@@ -54,12 +54,13 @@ const AllProducts = () => {
           <div className="text-sm text-gray-500 mt-2">
             <p>Category: {product.category}</p>
             <p>Brand: {product.brand}</p>
+            <p>Stock :{product.stock}</p>
           </div>
 
           {/* Edit Button Positioned at Bottom Right */}
           <div className="absolute bottom-4 right-4 ">
             <Link
-              to={`/edit-product/${product.product_id}`}
+              to={`/vendor/edit-product/${product.product_id}`}
               className="btn"
             >
               Edit

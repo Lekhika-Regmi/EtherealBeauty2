@@ -1,15 +1,39 @@
-
-// module.exports = router;
 const express = require("express");
 const router = express.Router();
 const Order = require("./orders.model");
 const OrderItem = require("./orderItems.model");
+const sequelize = require('../database/db.config'); // Adjust path if necessary
+
 //const authenticate = require("../middleware/authenticate"); // Assuming JWT-based auth middleware
 const authenticate = (req, res, next) => {
   console.log("Authentication middleware triggered");
   next();
 };
 const { body, validationResult } = require("express-validator");
+const { getVendorOrders } = require("./orders.controller");
+
+router.get('/vendor/:vendorId', getVendorOrders);
+
+
+
+router.get('/vendor/:vendorId/total-orders', async (req, res) => {
+  try {
+    const totalOrders = await OrderItem.count({
+      where: { 
+        vendor_id: req.params.vendorId 
+      },
+      distinct: true,
+      col: 'order_id'
+    });
+
+    console.log(`Found ${totalOrders} total orders for vendor ${req.params.vendorId}`);
+    res.json({ totalOrders });
+    
+  } catch (error) {
+    console.error('Error fetching total orders:', error);
+    res.status(500).json({ error: 'Failed to fetch total orders' });
+  }
+});
 
 
 
@@ -31,56 +55,67 @@ router.post(
     body("products.*.quantity").isInt({ min: 1 }).withMessage("Quantity must be at least 1"),
     body("products.*.price").isFloat({ min: 0.01 }).withMessage("Price must be valid"),
   
-  ],
-  async (req, res) => {
+  ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+  
+    const t = await sequelize.transaction();
+  
     try {
       const { customer_id, total_price, payment_method, address, products } = req.body;
-
-      // Step 1: Create the order
+  
+      // Create order
       const newOrder = await Order.create({
         customer_id,
         total_price,
         payment_method,
-        address: JSON.stringify(address), // Store address as JSON
-      });
-      console.log("New Order Created:", newOrder.dataValues); // Debugging line
-      
-
-      // Step 2: Insert products into OrderItem
-      const orderItems = products.map(({ id, quantity, price }) => ({
-        order_id: newOrder.order_id,
-        product_id: id,
-        vendor_id: 1, // Adjust vendor logic based on your system
-        quantity,
-        subtotal: quantity * price,
-      }));
-      console.log("Order Items to be inserted:", orderItems); 
-      try {
-        console.log("Attempting to insert order items...");
-        await OrderItem.bulkCreate(orderItems);
-        console.log("Order items inserted successfully!");
-      } catch (error) {
-        console.error("Error inserting order items:", error);
-        if (error.errors) {
-          error.errors.forEach((err) => console.error(err.message));
+        address: JSON.stringify(address),
+      }, { transaction: t });
+  
+      // Process each product and update stock
+      for (const product of products) {
+        // Check stock availability
+        const dbProduct = await Product.findByPk(product.id, { transaction: t });
+        
+        if (!dbProduct || dbProduct.stock < product.quantity) {
+          await t.rollback();
+          return res.status(400).json({ 
+            error: `Insufficient stock for product ${product.name}` 
+          });
         }
-      
+  
+        // Update stock
+        await dbProduct.update(
+          { stock: dbProduct.stock - product.quantity },
+          { transaction: t }
+        );
+  
+        // Create order item
+        await OrderItem.create({
+          order_id: newOrder.order_id,
+          product_id: product.id,
+          vendor_id: dbProduct.vendor_id,
+          quantity: product.quantity,
+          subtotal: product.quantity * product.price,
+        }, { transaction: t });
       }
-
-      res.status(201).json({ message: "Order placed successfully", order: newOrder });
+  
+      await t.commit();
+      console.log("Order created and stock updated successfully!");
+      
+      res.status(201).json({ 
+        message: "Order placed successfully", 
+        order: newOrder 
+      });
+  
     } catch (error) {
-      console.error("error",error);
+      await t.rollback();
+      console.error("Error creating order:", error);
       res.status(500).json({ error: error.message });
     }
-   
-    
-  }
-);
+  });
 
 // Get all orders
 router.get("/allOrders", authenticate, async (req, res) => {
@@ -124,14 +159,13 @@ router.get("/customer/:customerId", async (req, res) => {
         },
       ],
     });
-    console.log("Fetched orders:", JSON.stringify(orders, null, 2)); // ✅ Debugging output
+
     res.json(orders);
   } catch (error) {
     //console.error("Error fetching customer orders:", error);
     res.status(500).json({ error: "Failed to fetch orders" });
   }
 });
-
 
 
 router.get("/:id", authenticate, async (req, res) => {
@@ -146,8 +180,6 @@ router.get("/:id", authenticate, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
 
 
 

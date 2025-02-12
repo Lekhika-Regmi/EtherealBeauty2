@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import routes from "./routes";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-
 // Import Pages
 import Home from "../pages/home/Home";
 import Login from "../components/Login";
@@ -26,6 +25,9 @@ import VendorDashboard from "../pages/layout/DashboardSideBar";
 import CreateProduct from "../pages/shop/CreateProduct";
 import AllProducts from "../pages/shop/AllProducts";
 import EditProducts from "../pages/shop/EditProducts";
+import Inventory from "../pages/shop/Inventory";
+import Orders from "../pages/shop/Orders";
+
 // Super Admin Pages
 import SuperAdminLayout from "../components/superadmin/SuperAdminLayout";
 import Dashboard from "../pages/superadmin/Dashboard";
@@ -36,6 +38,7 @@ import ApprovedVendors from "../pages/superadmin/Inventory";
 import SuperOrders from "../pages/superadmin/SuperOrders";
 // import Settings from "../pages/superadmin/Settings";
 
+
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
@@ -43,8 +46,8 @@ const AppRouter = () => {
 
   return (
     <Routes>
-    {/* Public Routes accessible to non-vendors */}
-    <Route element={<CustomerPublicRoute />}>
+      {/* Public Routes accessible to non-vendors */}
+      <Route element={<CustomerPublicRoute />}>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.about} element={<About />} />
         <Route path={routes.contact} element={<Contact />} />
@@ -97,9 +100,9 @@ const AppRouter = () => {
         <Route path={routes.vendorCreateProduct} element={<CreateProduct />} />
         <Route path={routes.vendorProducts} element={<AllProducts />} />
         <Route path={routes.vendorEditProduct} element={<EditProducts />} />
+        <Route path={routes.vendorInventory} element={<Inventory />} />
+        <Route path={routes.vendorOrders} element={<Orders />} />
       </Route>
-
- 
 
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />

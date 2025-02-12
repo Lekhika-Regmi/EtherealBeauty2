@@ -50,13 +50,5 @@ const Order = sequelize.define(
     tableName: "Orders",
   }
 );
-Order.hasMany(OrderItem, { foreignKey: "order_id", as: "orderItems" });
-OrderItem.belongsTo(Order, { foreignKey: "order_id" });
-
-//Sync the table
-// (async () => {
-//   await sequelize.sync({ alter: true });
-//   console.log("Orders table synced!");
-// })();
 
 module.exports = Order;

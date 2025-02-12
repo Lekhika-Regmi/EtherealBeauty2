@@ -91,12 +91,20 @@ const EditProduct = () => {
     // Create FormData object for the API request
     const formData = new FormData();
     Object.keys(productData).forEach((key) => {
-      if (key === 'image' && !productData.image && existingImage) {
-        formData.append('image', existingImage);  // Keep the existing image if no new image is selected
-      } else {
+      if (key !== 'image') {
         formData.append(key, productData[key]);
       }
     });
+  
+    // Handle image separately
+    if (productData.image) {
+      // If new image is selected
+      formData.append('image', productData.image);
+    } else if (existingImage) {
+      // If using existing image
+      formData.append('existingImage', existingImage);
+    }
+  
 
     try {
       const response = await axios.patch(`${getBaseUrl()}/api/products/update-product/${id}`, formData, {
@@ -104,7 +112,7 @@ const EditProduct = () => {
       });
 
       setMessage(response.data.message);
-      navigate("/dashboard-products"); // Redirect to products list after update
+      navigate("/vendor/dashboard-products"); // Redirect to products list after update
     } catch (error) {
       console.error('Error updating product:', error);
       setMessage('Error updating product');
@@ -238,7 +246,7 @@ const EditProduct = () => {
 
         <button
           type="submit"
-          className="w-full py-3 text-white font-semibold rounded-md bg-blue-500"
+          className="btn"
           disabled={isLoading}
         >
           {isLoading ? 'Updating...' : 'Update Product'}
