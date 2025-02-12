@@ -23,7 +23,6 @@ const routes = {
   vendorInventory: "/vendor/inventory",
   vendorOrders: "/vendor/dashboard-orders",
 
-
   //superadmin routes 
   superadmin: {
     dashboard: "/superadmin/dashboard",
@@ -37,7 +36,6 @@ const routes = {
     pendingVendors: "/superadmin/vendors/pending",
     approvedVendors: "/superadmin/vendors/approved"
   }
-
 };
 
 export default routes;

@@ -27,7 +27,6 @@ import AllProducts from "../pages/shop/AllProducts";
 import EditProducts from "../pages/shop/EditProducts";
 import Inventory from "../pages/shop/Inventory";
 import Orders from "../pages/shop/Orders";
-
 // Super Admin Pages
 import SuperAdminLayout from "../components/superadmin/SuperAdminLayout";
 import Dashboard from "../pages/superadmin/Dashboard";
@@ -37,7 +36,6 @@ import Vendors from "../pages/superadmin/Vendors";
 import ApprovedVendors from "../pages/superadmin/Inventory";
 import SuperOrders from "../pages/superadmin/SuperOrders";
 // import Settings from "../pages/superadmin/Settings";
-
 
 import { useSelector } from "react-redux";
 
@@ -103,6 +101,11 @@ const AppRouter = () => {
         <Route path={routes.vendorInventory} element={<Inventory />} />
         <Route path={routes.vendorOrders} element={<Orders />} />
       </Route>
+
+
+      {/* <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
+    //here all superadmin ko routes
+      </Route> */}
 
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" />} />
