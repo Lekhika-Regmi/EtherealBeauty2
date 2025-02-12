@@ -12,7 +12,9 @@ const PrivateRoute = ({ allowedRoles }) => {
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     toast.error("You do not have permission to access this page.");
-    return <Navigate to="/" replace />;
+    return user.role === 'superadmin' 
+    ? <Navigate to={routes.superadminDashboard} replace />
+    : <Navigate to="/" replace />;
   }
 
   return <Outlet />;

@@ -21,6 +21,17 @@ const routes = {
   vendorCreateProduct: "/vendor/dashboard-create-product",
   vendorProducts: "/vendor/dashboard-products",
   vendorEditProduct: "/vendor/edit-product/:id",
+
+  //superadmin routes 
+  superadmin: "/superadmin",
+  superadminDashboard: "/superadmin/dashboard",
+  dashboard: "/superadmin/dashboard",
+  products: "/superadmin/products",
+  vendors: "/superadmin/vendors",
+  customers: "/superadmin/customers",
+  inventory: "/superadmin/inventory",
+  reports: "/superadmin/reports",
+  settings: "/superadmin/settings"
 };
 
 export default routes;

@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import VendorNavbar from "./components/VendorNavbar";
 import Footer from "./components/Footer";
 import AppRouter from "./routers/AppRouter";
+import SuperAdminLayout from "./components/superadmin/SuperAdminLayout";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,12 +36,21 @@ const App = () => {
 
   // Ensure only logged-in vendors see the VendorNavbar
   const isVendorPage = location.pathname.includes("/vendor") && user?.role === "vendor";
+  const isSuperAdminPage = location.pathname.startsWith("/superadmin");
 
   return (
     <>
-      {isVendorPage ? <VendorNavbar /> : <Navbar />}
-      <AppRouter />
-      <Footer />
+      {isSuperAdminPage ? (
+        <SuperAdminLayout>
+          <AppRouter />
+        </SuperAdminLayout>
+      ) : (
+        <>
+          {isVendorPage ? <VendorNavbar /> : <Navbar />}
+          <AppRouter />
+          <Footer />
+        </>
+      )}
     </>
   );
 };

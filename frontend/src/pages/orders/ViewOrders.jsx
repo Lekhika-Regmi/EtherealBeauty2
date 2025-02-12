@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"; // Import useSelector
 import { useGetCustomerOrdersQuery } from "../../features/orders/orderApi";
 import { useFetchAllProductsQuery } from "../../features/products/productsApi";
 
@@ -12,14 +12,13 @@ const ViewOrders = () => {
     return <p className="text-center text-gray-500">Please log in to view your orders.</p>;
   }
   
-  // Use the customer id from the user's customer object if available
-  // Adjust the property names if your auth state is structured differently
-  const customerId = user.customer ? user.customer.id : user.id;
-  
-  // Fetch orders for the customer
+  // Use the authenticated user's ID (adjust the property name if needed)
+  const customerId = user.id;
+
+  // Fetch orders using the customerId from the auth state
   const { data: orders, error, isLoading } = useGetCustomerOrdersQuery(customerId);
-  
-  // Fetch all products (for display purposes)
+
+  // Fetch all products
   const { data: products } = useFetchAllProductsQuery();
 
   if (isLoading)
@@ -33,7 +32,7 @@ const ViewOrders = () => {
   if (!orders?.length)
     return <p className="text-center text-gray-500">No orders found.</p>;
 
-  // Helper function to get the product name by its id
+  // Helper function to get the product name by its ID
   const getProductName = (productId) => {
     if (!products || !Array.isArray(products)) return "Loading...";
     return products.find((p) => p.product_id === productId)?.name || "Unknown Product";

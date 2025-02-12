@@ -20,7 +20,7 @@ import SingleProduct from "../pages/products/SingleProduct";
 import PaymentSuccess from "../pages/orders/PaymentSuccess";
 import ViewOrders from "../pages/orders/ViewOrders";
 import CustomerPublicRoute from "./CustomerPublicRoute";
-
+import SuperAdminDashboard from "../components/superadmin/SuperAdminLayout";
 // Vendor Pages
 import Vendor from "../pages/layout/Vendor";
 import VendorDashboard from "../pages/layout/DashboardSideBar";
@@ -69,6 +69,19 @@ const AppRouter = () => {
         <Route path={routes.vendorCreateProduct} element={<CreateProduct />} />
         <Route path={routes.vendorProducts} element={<AllProducts />} />
         <Route path={routes.vendorEditProduct} element={<EditProducts />} />
+      </Route>
+
+  {/* Super Admin Routes */}
+  <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
+        {/* <Route element={<SuperAdminLayout />}> */}
+          {/* <Route path={routes.superadminDashboard} element={<SuperAdminDashboard />} /> */}
+          {/* <Route path={routes.superadmin.products} element={<SuperAdminProducts />} />
+  <Route path={routes.superadmin.vendors} element={<SuperAdminVendors />} />
+  <Route path={routes.superadmin.customers} element={<SuperAdminCustomers />} />
+  <Route path={routes.superadmin.inventory} element={<SuperAdminInventory />} />
+  <Route path={routes.superadmin.reports} element={<SuperAdminReports />} />
+  <Route path={routes.superadmin.settings} element={<SuperAdminSettings />} /> */}
+        {/* </Route> */}
       </Route>
 
       {/* Redirect unknown routes */}

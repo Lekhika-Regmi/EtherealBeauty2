@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../../features/orders/orderApi";
 import paymentApi from "../../features/orders/paymentApi"
 import AddressSelector from "./AddressSelector";
-
 const Checkout = () => {
-   console.log("Checkout component is mounting");
-
+  const { user } = useSelector((state) => state.auth);
+  if (!user) {
+    return <p className="text-center text-gray-500">Please log in to proceed with checkout.</p>;
+  }
+  const customerId = user.customer?.id;
+  console.log("customer",customerId);
 const [province, setProvince] = useState("");
 const [district, setDistrict] = useState("");
 const [municipality, setMunicipality] = useState("");
@@ -17,6 +20,7 @@ const [orderPlaced, setOrderPlaced] = useState(false);
 
   const navigate = useNavigate();
   const products = useSelector((store) => store.cart.products);
+
   const { totalPrice = 0, grandTotal = 0 } = useSelector((store) => store.cart) || {};
   const [createOrder, { isLoading, isSuccess }] = useCreateOrderMutation();
   useEffect(() => {
@@ -27,7 +31,7 @@ const [orderPlaced, setOrderPlaced] = useState(false);
     console.log("➡️ handlePlaceOrder triggered!");
   
     const orderData = {
-      customer_id: 1,
+      customer_id: user.id,
       total_price: grandTotal,
       payment_method,
       address: {
