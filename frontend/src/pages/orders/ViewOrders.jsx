@@ -2,27 +2,38 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useGetCustomerOrdersQuery } from "../../features/orders/orderApi";
 import { useFetchAllProductsQuery } from "../../features/products/productsApi";
-import { useNavigate } from "react-router-dom";
 
 const ViewOrders = () => {
-  const navigate = useNavigate();
-  const customer = useSelector((state) => state.auth?.user);
-
-  // If no customer exists, prompt to log in (or redirect to login)
-  if (!customer) {
-    // Optionally, you could redirect using: navigate("/login");
+  // Get the authenticated user from Redux
+  const { user } = useSelector((state) => state.auth);
+  
+  // If no user is logged in, display a message
+  if (!user) {
     return <p className="text-center text-gray-500">Please log in to view your orders.</p>;
   }
-
-  // Use the authenticated customer's ID
-  const { data: orders, error, isLoading } = useGetCustomerOrdersQuery(customer.id);
+  
+  // Use the customer id from the user's customer object if available
+  // Adjust the property names if your auth state is structured differently
+  const customerId = user.customer ? user.customer.id : user.id;
+  
+  // Fetch orders for the customer
+  const { data: orders, error, isLoading } = useGetCustomerOrdersQuery(customerId);
+  
+  // Fetch all products (for display purposes)
   const { data: products } = useFetchAllProductsQuery();
 
-  if (isLoading) return <p className="text-center text-gray-500">Loading orders...</p>;
-  if (error) return <p className="text-center text-red-500">Error fetching orders: {error.message}</p>;
-  if (!orders?.length) return <p className="text-center text-gray-500">No orders found.</p>;
+  if (isLoading)
+    return <p className="text-center text-gray-500">Loading orders...</p>;
+  if (error)
+    return (
+      <p className="text-center text-red-500">
+        Error fetching orders: {error.message}
+      </p>
+    );
+  if (!orders?.length)
+    return <p className="text-center text-gray-500">No orders found.</p>;
 
-  // Helper function to retrieve the product name from its ID
+  // Helper function to get the product name by its id
   const getProductName = (productId) => {
     if (!products || !Array.isArray(products)) return "Loading...";
     return products.find((p) => p.product_id === productId)?.name || "Unknown Product";
@@ -41,7 +52,7 @@ const ViewOrders = () => {
               Order ID: <span className="font-normal text-gray-600">{order.order_id}</span>
             </p>
             <p className="text-gray-700 mt-2">
-              <strong>Status:</strong>{" "}
+              <strong>Status:</strong>
               <span
                 className={`ml-2 px-3 py-1 rounded-lg text-white text-sm ${
                   order.status === "Pending" ? "bg-yellow-500" : "bg-green-600"
@@ -64,9 +75,13 @@ const ViewOrders = () => {
                   key={item.order_item_id}
                   className="ml-4 pl-2 border-l-4 border-pink-300 text-gray-700"
                 >
-                  <span className="text-lg font-medium text-pink-400">{item.quantity}x</span>{" "}
+                  <span className="text-lg font-medium text-pink-400">
+                    {item.quantity}x
+                  </span>{" "}
                   {getProductName(item.product_id)} -{" "}
-                  <span className="font-semibold text-gray-900">NPR {item.subtotal}</span>
+                  <span className="font-semibold text-gray-900">
+                    NPR {item.subtotal}
+                  </span>
                 </li>
               ))}
             </ul>
