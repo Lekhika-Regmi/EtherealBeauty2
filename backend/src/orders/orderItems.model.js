@@ -36,7 +36,7 @@ const OrderItem = sequelize.define(
       allowNull: false,
       references: {
         model: Vendor,
-        key: "vendor_id",
+        key: "id",
       },
       onDelete: "CASCADE",
     },

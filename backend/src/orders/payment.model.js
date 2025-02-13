@@ -25,7 +25,7 @@ const Payment = sequelize.define(
       allowNull: false,
       references: {
         model: Customer,
-        key: "customer_id",
+        key: "id",
       },
       onDelete: "CASCADE",
     },
@@ -54,7 +54,7 @@ const Payment = sequelize.define(
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    pidx: { type: String, 
+    pidx: { type: DataTypes.STRING, 
       unique: false },
   },
   {
