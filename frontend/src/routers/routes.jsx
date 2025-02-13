@@ -26,17 +26,30 @@ const routes = {
   vendorOrders: "/vendor/dashboard-orders",
 
   //superadmin routes 
+
+  // superadmin: {
+  //  superadmin : "/superadmin",
+  //   dashboard: "/superadmin/dashboard",
+  //   products: "/superadmin/products",
+  //   vendors: "/superadmin/vendors",
+  //   customers: "/superadmin/customers",
+  //   inventory: "/superadmin/inventory",
+   
+  //   orders: "/superadmin/orders",
+  
+  //   pendingVendors: "/superadmin/vendors/pending",
+  //   approvedVendors: "/superadmin/vendors/approved"
+  // }
   superadmin: {
+    root: "/superadmin",
     dashboard: "/superadmin/dashboard",
     products: "/superadmin/products",
-    vendors: "/superadmin/vendors",
     customers: "/superadmin/customers",
-    inventory: "/superadmin/inventory",
-   
-    orders: "/superadmin/orders",
-  
-    pendingVendors: "/superadmin/vendors/pending",
-    approvedVendors: "/superadmin/vendors/approved"
+    vendors: {
+      pending: "/superadmin/vendors/pending",
+      approved: "/superadmin/vendors/approved"
+    },
+    orders: "/superadmin/orders"
   }
 };
 

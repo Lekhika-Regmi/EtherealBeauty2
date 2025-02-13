@@ -78,23 +78,17 @@ const AppRouter = () => {
         <Route path={routes.orders} element={<ViewOrders />} />
       </Route>
 
-        {/* Super Admin Routes */}
-  <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
-  <Route element={<SuperAdminLayout />}>
-    <Route path={routes.superadmin.dashboard} element={<Dashboard />} />
-    <Route path={routes.superadmin.products} element={<Aproducts />} />
-    <Route path={routes.superadmin.customers} element={<Customers />} />
-   
-    {/* Vendor Management Routes */}
-    <Route path={routes.superadmin.pendingVendors} element={<Vendors />} />
-    <Route path={routes.superadmin.approvedVendors} element={<ApprovedVendors />} />
-
-    <Route path={routes.superadmin.orders} element={<SuperOrders />} />
-    {/* <Route path={routes.superadmin.settings} element={<Settings />} /> */}
+      <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
+  <Route path="/superadmin" element={<SuperAdminLayout />}>
+    <Route index element={<Dashboard />} />
+    <Route path="dashboard" element={<Dashboard />} />
+    <Route path="products" element={<Aproducts />} />
+    <Route path="customers" element={<Customers />} />
+    <Route path="vendors/pending" element={<Vendors />} />
+    <Route path="vendors/approved" element={<ApprovedVendors />} />
+    <Route path="orders" element={<SuperOrders />} />
   </Route>
-
-
- </Route>
+</Route>
       {/* Vendor Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
         <Route path={routes.vendor} element={<Vendor />} />

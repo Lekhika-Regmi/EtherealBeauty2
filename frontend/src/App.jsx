@@ -38,19 +38,27 @@ const App = () => {
   const isVendorPage = location.pathname.includes("/vendor") && user?.role === "vendor";
   const isSuperAdminPage = location.pathname.startsWith("/superadmin");
 
+  // return (
+  //   <>
+  //     {isSuperAdminPage ? (
+  //       <SuperAdminLayout>
+  //         <AppRouter />
+  //       </SuperAdminLayout>
+  //     ) : (
+  //       <>
+  //         {isVendorPage ? <VendorNavbar /> : <Navbar />}
+  //         <AppRouter />
+  //         <Footer />
+  //       </>
+  //     )}
+  //   </>
+  // );
   return (
     <>
-      {isSuperAdminPage ? (
-        <SuperAdminLayout>
-          <AppRouter />
-        </SuperAdminLayout>
-      ) : (
-        <>
-          {isVendorPage ? <VendorNavbar /> : <Navbar />}
-          <AppRouter />
-          <Footer />
-        </>
-      )}
+      {isVendorPage ? <VendorNavbar /> : 
+       !isSuperAdminPage ? <Navbar /> : null}
+      <AppRouter />
+      {!isSuperAdminPage && <Footer />}
     </>
   );
 };

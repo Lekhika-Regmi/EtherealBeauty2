@@ -11,12 +11,13 @@ const PrivateRoute = ({ allowedRoles }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    toast.error("You do not have permission to access this page.");
-    return user.role === 'superadmin' 
-    ? <Navigate to={routes.superadminDashboard} replace />
+// privateroute.jsx (correction)
+if (allowedRoles && !allowedRoles.includes(user.role)) {
+  toast.error("You do not have permission to access this page.");
+  return user.role === 'superadmin' 
+    ? <Navigate to={routes.superadmin.dashboard} replace /> // Fixed path
     : <Navigate to="/" replace />;
-  }
+}
 
   return <Outlet />;
 };
