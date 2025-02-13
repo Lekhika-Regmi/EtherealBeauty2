@@ -1,14 +1,19 @@
 import React from "react";
-import { useCurrentIds } from "../../features/authHelpers"; // adjust path if needed
+import { useSelector } from "react-redux";
+import { useCurrentIds } from '../../features/authHelpers';
 import { useGetCustomerOrdersQuery } from "../../features/orders/orderApi";
 import { useFetchAllProductsQuery } from "../../features/products/productsApi";
 
 const ViewOrders = () => {
+  const { user } = useSelector((state) => state.auth);
+  if (!user) {
+    return <p className="text-center text-gray-500">Please log in to proceed with checkout.</p>;
+  }
   // Get the associated customerId from your auth state
-  const { customerId, role } = useCurrentIds();
-
+const { customerId, role } = useCurrentIds();
+console.log("customerId", customerId);
   // If there's no associated customerId (or if the logged-in user is not a customer), show a message
-  if (!customerId || role !== "customer") {
+  if (role !== 'customer'){
     return <p className="text-center text-gray-500">Please log in as a customer to view your orders.</p>;
   }
 

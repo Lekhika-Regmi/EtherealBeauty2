@@ -22,12 +22,13 @@ const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
 
       // Store associated IDs based on role by extracting it from the user object.
-      if (action.payload.user.role === 'customer') {
-        state.customerId = action.payload.user.associatedId;
-        localStorage.setItem("customerId", action.payload.user.associatedId);
-      } else if (action.payload.user.role === 'vendor') {
-        state.vendorId = action.payload.user.associatedId;
-        localStorage.setItem("vendorId", action.payload.user.associatedId);
+      const associatedId = action.payload.user.associatedId;
+      if (action.payload.user.role === 'customer' && associatedId) {
+        state.customerId = associatedId;
+        localStorage.setItem("customerId", associatedId.toString()); // Ensure it's a string
+      } else if (action.payload.user.role === 'vendor' && associatedId) {
+        state.vendorId = associatedId;
+        localStorage.setItem("vendorId", associatedId.toString());
       }
     },
     logout: (state) => {
