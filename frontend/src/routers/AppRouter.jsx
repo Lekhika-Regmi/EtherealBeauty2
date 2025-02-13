@@ -16,9 +16,11 @@ import WebcamCapture from "../pages/home/WebcamCapture";
 import Checkout from "../pages/products/CheckoutPage";
 import ProductPage from "../pages/products/ProductPage";
 import SingleProduct from "../pages/products/SingleProduct";
+import Aqi from "../pages/aqi/AqiPage";
 import PaymentSuccess from "../pages/orders/PaymentSuccess";
 import ViewOrders from "../pages/orders/ViewOrders";
 import CustomerPublicRoute from "./CustomerPublicRoute";
+
 // Vendor Pages
 import Vendor from "../pages/layout/Vendor";
 import VendorDashboard from "../pages/layout/DashboardSideBar";
@@ -55,6 +57,7 @@ const AppRouter = () => {
         <Route path={routes.product} element={<ProductPage />} />
         <Route path={routes.singleProduct} element={<SingleProduct />} />
         <Route path={routes.payment} element={<PaymentSuccess />} />
+        <Route path={routes.aqi} element={<Aqi/>} />
       </Route>
 
       {/* Authentication Routes */}

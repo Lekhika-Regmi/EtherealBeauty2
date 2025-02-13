@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database/db.config"); // Sequelize instance
-
+const Vendor = require("../users/vendor/vendors.model");
 const Product = sequelize.define(
   "Product", {
   product_id: {
@@ -8,9 +8,10 @@ const Product = sequelize.define(
     primaryKey: true,
     autoIncrement: true,
   },
-  vendor_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  vendor_id: { 
+    type: DataTypes.INTEGER, 
+    references: { model: "Vendors", key: "id" }, 
+    allowNull: false 
   },
   name: {
     type: DataTypes.STRING,

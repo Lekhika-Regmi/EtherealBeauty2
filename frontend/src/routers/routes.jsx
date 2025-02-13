@@ -12,6 +12,7 @@ const routes = {
   product: "/products",
   singleProduct: "/product/:id",
   orders: "/orders",
+  aqi: "/aqi",
 
   // Vendor Routes
   

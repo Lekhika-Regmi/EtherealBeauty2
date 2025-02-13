@@ -25,7 +25,7 @@ const Payment = sequelize.define(
       allowNull: false,
       references: {
         model: Customer,
-        key: "customer_id",
+        key: "id",
       },
       onDelete: "CASCADE",
     },
