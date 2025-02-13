@@ -83,7 +83,8 @@ const AppRouter = () => {
     <Route path={routes.superadmin.dashboard} element={<Dashboard />} />
     <Route path={routes.superadmin.products} element={<Aproducts />} />
     <Route path={routes.superadmin.customers} element={<Customers />} />
-   
+    <Route path={routes.superadmin.vendors} element={<Vendor />} />
+
     {/* Vendor Management Routes */}
     <Route path={routes.superadmin.pendingVendors} element={<Vendors />} />
     <Route path={routes.superadmin.approvedVendors} element={<ApprovedVendors />} />

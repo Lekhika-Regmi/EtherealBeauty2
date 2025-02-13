@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import routes from "./routes";
 
 const PrivateRoute = ({ allowedRoles }) => {
   const { user } = useSelector((state) => state.auth);

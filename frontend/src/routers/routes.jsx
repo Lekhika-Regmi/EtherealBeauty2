@@ -31,9 +31,9 @@ const routes = {
     vendors: "/superadmin/vendors",
     customers: "/superadmin/customers",
     inventory: "/superadmin/inventory",
-    reports: "/superadmin/reports",
+   
     orders: "/superadmin/orders",
-    settings: "/superadmin/settings",
+  
     pendingVendors: "/superadmin/vendors/pending",
     approvedVendors: "/superadmin/vendors/approved"
   }
