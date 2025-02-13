@@ -36,7 +36,7 @@ const OrderItem = sequelize.define(
       allowNull: false,
       references: {
         model: Vendor,
-        key: "vendor_id",
+        key: "id",
       },
       onDelete: "CASCADE",
     },
@@ -62,7 +62,8 @@ const OrderItem = sequelize.define(
     tableName: "OrderItems",
   }
 );
-
+// Order.hasMany(OrderItem, { foreignKey: "order_id", as: "orderItems" });
+// OrderItem.belongsTo(Order, { foreignKey: "order_id", as: "order" });
 
 
 module.exports = OrderItem;

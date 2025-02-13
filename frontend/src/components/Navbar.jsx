@@ -10,7 +10,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const [logoutMessage, setLogoutMessage] = useState(""); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,6 +31,11 @@ const Navbar = () => {
         // User canceled the logout.
         return;
       }
+       // Display the logout message for 2 seconds
+       setLogoutMessage("You are being logged out and your cart is cleared.");
+       setTimeout(() => {
+         setLogoutMessage(""); // Clear the message after 2 seconds
+       }, 2000);
       // Clear the cart if the user confirmed.
       dispatch(clearCart());
     }
@@ -38,7 +43,7 @@ const Navbar = () => {
     dispatch(logout());
     localStorage.removeItem("token");
     setIsDropdownOpen(false);
-    navigate("/login");
+    navigate("/");
   };
 
   // Close dropdown when clicking outside
@@ -83,7 +88,7 @@ const Navbar = () => {
               <i className="ri-search-2-line"></i>
             </Link>
           </span>
-          {user && (
+       
             <span>
               <button onClick={() => setIsCartOpen(true)} className="hover:text-primary">
                 <i className="ri-shopping-bag-4-fill"></i>
@@ -92,7 +97,7 @@ const Navbar = () => {
                 </sup>
               </button>
             </span>
-          )}
+          
 
           <span className="relative" ref={dropdownRef}>
             <button
@@ -133,6 +138,12 @@ const Navbar = () => {
           </span>
         </div>
       </nav>
+{/* Display the logout message */}
+{logoutMessage && (
+        <div className="logout-message">
+          {logoutMessage}
+        </div>
+      )}
 
       <CartModel
         products={products}

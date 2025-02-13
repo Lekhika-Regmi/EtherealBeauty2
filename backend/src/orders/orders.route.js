@@ -4,7 +4,7 @@ const Order = require("./orders.model");
 const OrderItem = require("./orderItems.model");
 const sequelize = require('../database/db.config'); // Adjust path if necessary
 const Product= require('../products/products.model');
-
+const Customer = require('../users/customer/customers.model');
 //const authenticate = require("../middleware/authenticate"); // Assuming JWT-based auth middleware
 const authenticate = (req, res, next) => {
   console.log("Authentication middleware triggered");
@@ -12,11 +12,7 @@ const authenticate = (req, res, next) => {
 };
 const { body, validationResult } = require("express-validator");
 const { getVendorOrders } = require("./orders.controller");
-
 router.get('/vendor/:vendorId', getVendorOrders);
-
-
-
 router.get('/vendor/:vendorId/total-orders', async (req, res) => {
   try {
     const totalOrders = await OrderItem.count({
@@ -35,8 +31,6 @@ router.get('/vendor/:vendorId/total-orders', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch total orders' });
   }
 });
-
-
 
 // Create an Order
 router.post(
@@ -128,28 +122,11 @@ router.get("/allOrders", authenticate, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-//test
-router.get("/test", (req, res) => {
-  res.json({ message: "Orders route is working!" });
-});
 
-// Get a single order by ID
-// router.get("/:id", authenticate, async (req, res) => {
-//   try {
-//     const order = await Order.findByPk(req.params.id);
-//     if (!order) {
-//       return res.status(404).json({ error: "Order not found" });
-//     }
-//     res.json(order);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-// ✅ Get Orders by Customer ID
+///✅ Get Orders by Customer ID
 router.get("/customer/:customerId", async (req, res) => {
   const { customerId } = req.params;
-  console.log(`Fetching orders for customer: ${customerId}`);
+  // console.log(`Fetching orders for customer: ${customerId}`);
 
   try {
     const orders = await Order.findAll({
@@ -157,17 +134,22 @@ router.get("/customer/:customerId", async (req, res) => {
       include: [
         {
           model: OrderItem,
-          as: "orderItems", // ✅ Add the alias to match the association
+          as: "orderItems", // ✅ Make sure the alias is correct
+          attributes: {
+            exclude: ['id'], // Ensure we're not selecting 'id' from OrderItems
+          },
         },
       ],
     });
 
+    // console.log("Fetched orders:", JSON.stringify(orders, null, 2));
     res.json(orders);
   } catch (error) {
-    //console.error("Error fetching customer orders:", error);
-    res.status(500).json({ error: "Failed to fetch orders" });
+    console.error("Error fetching customer orders:", error); // More detailed error message
+    res.status(500).json({ error: error.message || "Failed to fetch orders" });
   }
 });
+
 
 
 router.get("/:id", authenticate, async (req, res) => {
