@@ -17,6 +17,7 @@ const routes = {
   
   vendor: "/vendor",
   vendorDashboard: "/vendor/Dashboard",
+  vendorDashboardContent: "/vendor/dashboard-content",
   vendorCreateProduct: "/vendor/dashboard-create-product",
   vendorProducts: "/vendor/dashboard-products",
   vendorEditProduct: "/vendor/edit-product/:id",

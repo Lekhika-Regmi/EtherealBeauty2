@@ -27,6 +27,7 @@ import AllProducts from "../pages/shop/AllProducts";
 import EditProducts from "../pages/shop/EditProducts";
 import Inventory from "../pages/shop/Inventory";
 import Orders from "../pages/shop/Orders";
+import VDashboard from "../pages/shop/VDashboard";
 // Super Admin Pages
 import SuperAdminLayout from "../components/superadmin/SuperAdminLayout";
 import Dashboard from "../pages/superadmin/Dashboard";
@@ -95,6 +96,7 @@ const AppRouter = () => {
       <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
         <Route path={routes.vendor} element={<Vendor />} />
         <Route path={routes.vendorDashboard} element={<VendorDashboard />} />
+        <Route path={routes.vendorDashboardContent} element={<VDashboard />} />
         <Route path={routes.vendorCreateProduct} element={<CreateProduct />} />
         <Route path={routes.vendorProducts} element={<AllProducts />} />
         <Route path={routes.vendorEditProduct} element={<EditProducts />} />

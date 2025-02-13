@@ -4,7 +4,7 @@ const Product = require('../products/products.model');
 const Vendor = require('../users/vendor/vendors.model');
 
 // Order associations
-Order.hasMany(OrderItem, { foreignKey: 'order_id', as: 'orderItems' });
+Order.hasMany(OrderItem, { foreignKey: 'order_item_id', as: 'orderItems' });
 OrderItem.belongsTo(Order, { foreignKey: 'order_id', as: 'order' });
 
 // Product associations
