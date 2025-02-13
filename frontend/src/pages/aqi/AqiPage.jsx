@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./AqiPage.css";
 import pollution from "../../assets/pollution.jpg";
 const AqiPage = () => {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+    
   const [aqiData, setAqiData] = useState(null);
   const [error, setError] = useState(null);
   const apiKey = "c9480d5f-d68a-4b55-b116-fec97480b7cd"; // Replace with your API Key

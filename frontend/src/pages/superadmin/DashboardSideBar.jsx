@@ -52,7 +52,7 @@ const DashboardSideBar = ({ active }) => {
             </div>
 
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.pendingVendors} className="w-full flex items-center gap-2">
+            <Link to={routes.superadmin.pending} className="w-full flex items-center gap-2">
                     <AiOutlineFolderAdd size={30}
                         color={'${active === 4? "crimson" : "#555"}'} />
                     <h5
@@ -64,7 +64,7 @@ const DashboardSideBar = ({ active }) => {
                 </Link>
             </div>
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.approvedVendors} className="w-full flex items-center gap-2">
+            <Link to={routes.superadmin.approved} className="w-full flex items-center gap-2">
                     <CiMoneyBill
                         size={30}
                         color={'${active === 7 ? "crimson" : "#555"}'} />

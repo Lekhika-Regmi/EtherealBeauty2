@@ -7,6 +7,47 @@ const User = require("../users.model");
 const upload = require("../../middleware/upload"); 
 
 
+
+router.get('/unapproved', async (req, res) => {
+  try {
+    const unapprovedVendors = await Vendor.findAll({ where: { isApproved: false } });
+    res.json(unapprovedVendors);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+router.put('/approve/:vendorId', async (req, res) => {
+  try {
+    const { vendorId } = req.params;
+    const vendor = await Vendor.findByPk(vendorId);
+    if (!vendor) return res.status(404).json({ message: 'Vendor not found' });
+
+    vendor.isApproved = true;
+    await vendor.save();
+
+    res.json({ message: 'Vendor approved successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// In your backend API (e.g., `products.router.js` or `vendors.router.js`)
+
+// Route for getting all approved vendors
+router.get('/vendor/display_all_vendors', async (req, res) => {
+  try {
+    const approvedVendors = await Vendor.findAll({ where: { isApproved: 1 } });
+    res.json(approvedVendors);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
 // POST route for vendor registration
 // router.post("/register/vendor", upload, async (req, res) => {
 //   try {

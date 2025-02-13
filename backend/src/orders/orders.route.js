@@ -5,6 +5,8 @@ const OrderItem = require("./orderItems.model");
 const sequelize = require('../database/db.config'); // Adjust path if necessary
 const Product= require('../products/products.model');
 const Customer = require('../users/customer/customers.model');
+const Vendor = require("../users/vendor/vendors.model");
+
 //const authenticate = require("../middleware/authenticate"); // Assuming JWT-based auth middleware
 const authenticate = (req, res, next) => {
   console.log("Authentication middleware triggered");
@@ -29,6 +31,17 @@ router.get('/vendor/:vendorId/total-orders', async (req, res) => {
   } catch (error) {
     console.error('Error fetching total orders:', error);
     res.status(500).json({ error: 'Failed to fetch total orders' });
+  }
+});
+
+
+router.get("/total-orders", async (req, res) => {
+  try {
+      const totalOrders = await Order.count(); // Count total orders
+      res.json({ totalOrders });
+  } catch (error) {
+      console.error("Error fetching total orders:", error);
+      res.status(500).json({ error: "Error fetching total orders" });
   }
 });
 
@@ -162,6 +175,42 @@ router.get("/:id", authenticate, async (req, res) => {
     res.json(order);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+
+router.get('/superadmin/orders', async (req, res) => {
+  try {
+      console.log('Fetching all orders for superadmin');
+
+      const orders = await Order.findAll({
+          include: [
+              {
+                  model: OrderItem,
+                  as: 'orderItems',
+                  attributes: ['order_item_id', 'vendor_id', 'product_id', 'quantity', 'subtotal', 'status'],
+                  include: [
+                      {
+                          model: Product,
+                          as: 'product',
+                          attributes: ['name', 'price', 'image']
+                      },
+                      {
+                          model: Vendor,
+                          as: 'vendor',
+                          attributes: ['id', 'vendorName']
+                      }
+                  ]
+              }
+          ],
+          order: [['created_at', 'DESC']] // This orders by the latest created first
+      });
+
+      console.log(`Found ${orders.length} orders`);
+      res.json({ orders });
+  } catch (error) {
+      console.error('Error fetching orders for superadmin:', error);
+      res.status(500).json({ error: "Error fetching orders." });
   }
 });
 

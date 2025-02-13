@@ -35,8 +35,8 @@ import SuperAdminLayout from "../components/superadmin/SuperAdminLayout";
 import Dashboard from "../pages/superadmin/Dashboard";
 import Aproducts from "../pages/superadmin/Aproducts";
 import Customers from "../pages/superadmin/Customers";
-import Vendors from "../pages/superadmin/Vendors";
-import ApprovedVendors from "../pages/superadmin/Inventory";
+import PendingVendors from "../pages/superadmin/PendingVendors";
+import ApprovedVendors from "../pages/superadmin/ApprovedVendors";
 import SuperOrders from "../pages/superadmin/SuperOrders";
 // import Settings from "../pages/superadmin/Settings";
 
@@ -84,7 +84,7 @@ const AppRouter = () => {
     <Route path="dashboard" element={<Dashboard />} />
     <Route path="products" element={<Aproducts />} />
     <Route path="customers" element={<Customers />} />
-    <Route path="vendors/pending" element={<Vendors />} />
+    <Route path="/superadmin/vendors/pending" element={<PendingVendors />} />
     <Route path="vendors/approved" element={<ApprovedVendors />} />
     <Route path="orders" element={<SuperOrders />} />
   </Route>

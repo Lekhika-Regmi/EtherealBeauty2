@@ -8,7 +8,7 @@ const Customers = () => {
 
   useEffect(() => {
     const fetchCustomers = async () => {
-      const apiUrl = `${getBaseUrl()}/api/customers/display_all_customers`;
+      const apiUrl = `${getBaseUrl()}/api/customer/display_all_customers`;
       try {
         const response = await axios.get(apiUrl);
         setCustomers(response.data);
@@ -29,18 +29,14 @@ const Customers = () => {
         <table className="w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border p-2">Customer ID</th>
               <th className="border p-2">Username</th>
-              <th className="border p-2">Email</th>
               <th className="border p-2">Phone Number</th>
             </tr>
           </thead>
           <tbody>
             {customers.map((customer) => (
               <tr key={customer.customer_id} className="text-center border">
-                <td className="border p-2">{customer.customer_id}</td>
                 <td className="border p-2">{customer.username}</td>
-                <td className="border p-2">{customer.email}</td>
                 <td className="border p-2">{customer.phone_no}</td>
               </tr>
             ))}

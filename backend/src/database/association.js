@@ -14,11 +14,16 @@ OrderItem.belongsTo(Product, { foreignKey: "product_id", as: "product" });
 
 // Vendor associations
 Vendor.hasMany(OrderItem, { foreignKey: "vendor_id", as: "orderItems" });
-OrderItem.belongsTo(Vendor, { foreignKey: "id", as: "vendor" });
+OrderItem.belongsTo(Vendor, { foreignKey: "vendor_id", as: "vendor" });
 
 // Customer associations
 Customer.hasMany(Order, { foreignKey: 'customer_id', as: 'orders' });
 Order.belongsTo(Customer, { foreignKey: 'customer_id', as: 'customer' });
+
+Product.belongsTo(Vendor, { foreignKey: 'vendor_id', as: 'vendor' }); // This links Product to Vendor
+
+// Vendor associations
+Vendor.hasMany(Product, { foreignKey: 'vendor_id', as: 'products' });
 
 
 module.exports = { OrderItem, Order, Product, Vendor };

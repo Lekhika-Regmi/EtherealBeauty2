@@ -21,7 +21,7 @@ const Dashboard = () => {
         const vendorResponse = await axios.get(`${getBaseUrl()}/api/products/total-vendors`);
         setTotalVendors(vendorResponse.data.totalVendors);
 
-        const customerResponse = await axios.get(`${getBaseUrl()}/api/customers/total-customers`);
+        const customerResponse = await axios.get(`${getBaseUrl()}/api/customer/total-customers`);
         setTotalCustomers(customerResponse.data.totalCustomers);
 
       } catch (err) {

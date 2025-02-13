@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"; // Import Link for navigation
 import { getBaseUrl } from "../../utils/baseURL";
 
 const AllProducts = () => {
@@ -54,17 +53,10 @@ const AllProducts = () => {
           <div className="text-sm text-gray-500 mt-2">
             <p>Category: {product.category}</p>
             <p>Brand: {product.brand}</p>
+            {/* Display Vendor Name */}
+            {product.vendor && <p>Vendor: {product.vendor.vendorName}</p>}
           </div>
 
-          {/* Edit Button Positioned at Bottom Right */}
-          <div className="absolute bottom-4 right-4 ">
-            <Link
-              to={`/edit-product/${product.product_id}`}
-              className="btn"
-            >
-              Edit
-            </Link>
-          </div>
         </div>
       ))}
     </div>

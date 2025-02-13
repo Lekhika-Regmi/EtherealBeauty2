@@ -51,6 +51,9 @@ const Vendor = sequelize.define(
         key: "id",
       },
       allowNull: false,
+    },isApproved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false, // Vendor is not approved by default
     }
   },
   {

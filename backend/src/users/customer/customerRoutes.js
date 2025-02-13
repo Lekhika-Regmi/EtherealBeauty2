@@ -4,6 +4,30 @@ const bcrypt = require("bcryptjs");
 const Customer = require("./customers.model"); // Adjust the path to your model
 const User = require("../users.model"); // Adjust the path to your model
 
+
+router.get("/display_all_customers", async (req, res) => {
+  try {
+    const customers = await Customer.findAll({
+      attributes: { exclude: ["password"] }, // Exclude password field for security
+    });
+    res.status(200).json(customers);
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+    res.status(500).json({ message: "Error fetching customers" });
+  }
+});
+
+
+router.get("/total-customers", async (req, res) => {
+  try {
+    const totalCustomers = await Customer.count();
+    res.status(200).json({ totalCustomers });
+  } catch (error) {
+    console.error("Error fetching total customers:", error);
+    res.status(500).json({ message: "Failed to fetch total customers" });
+  }
+});
+
 // Register a customer
 router.post("/register/customer", async (req, res) => {
   try {
@@ -34,5 +58,9 @@ if (existingUser) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+
+
+
 
 module.exports = router;

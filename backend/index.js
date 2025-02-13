@@ -41,6 +41,9 @@ const vendorRoutes = require('./src/users/vendor/vendorRoutes');
 const authRoutes = require("./src/users/authRoutes");
 
 
+const customerss = require("./src/users/customer/customerRoutes");
+const vendorss = require("./src/users/vendor/vendorRoutes");
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 
@@ -55,6 +58,8 @@ app.use('/api/orderitems', orderItemsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", customerRoutes);
 app.use("/api", vendorRoutes); 
+app.use("/api/customer", customerss);
+app.use("/api/vendors", vendorss);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));

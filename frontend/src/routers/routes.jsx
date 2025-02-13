@@ -45,10 +45,10 @@ const routes = {
     dashboard: "/superadmin/dashboard",
     products: "/superadmin/products",
     customers: "/superadmin/customers",
-    vendors: {
+
       pending: "/superadmin/vendors/pending",
-      approved: "/superadmin/vendors/approved"
-    },
+      approved: "/superadmin/vendors/approved",
+  
     orders: "/superadmin/orders"
   }
 };

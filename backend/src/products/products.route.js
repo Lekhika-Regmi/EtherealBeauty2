@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const { Op } = require("sequelize");
 const verifyToken = require("../middleware/authMiddleware");
+const Vendor = require("../users/vendor/vendors.model"); // Adjust the path to your Vendor model
 
 
 
@@ -33,6 +34,10 @@ const upload = multer({ storage: storage });
 //     res.status(500).json({ message: "Failed to fetch products" });
 //   }
 // });
+
+
+
+
 router.get("/allProducts", async (req, res) => {
   try {
     const { category, brand, skinType, minPrice, maxPrice } = req.query;
@@ -61,6 +66,40 @@ router.get("/allProducts", async (req, res) => {
   } catch (error) {
     console.error("Error fetching filtered products:", error);
     res.status(500).json({ message: "Failed to fetch products" });
+  }
+});
+
+
+router.get('/display_all_products', async (req, res) => {
+  try {
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Vendor,
+          as: 'vendor', // The alias should match the one set in your association
+          attributes: ['vendorName'], // You can include any vendor fields here
+        }
+      ]
+    });
+
+    const productsWithImagesAndVendor = products.map(product => {
+      // If the product has an image, append the full path
+      if (product.image) {
+        product.image = `http://localhost:5000${product.image}`;
+      }
+
+      // Add the vendorName to the product object
+      if (product.vendor) {
+        product.vendorName = product.vendor.vendorName;
+      }
+
+      return product;
+    });
+
+    res.status(200).json(productsWithImagesAndVendor);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Error fetching products' });
   }
 });
 
@@ -114,6 +153,28 @@ router.get("/total-vendor-products", async (req, res) => {
   }
 });
 
+
+
+router.get("/total-products", async (req, res) => {
+  try {
+    const totalProducts = await Product.count();
+    res.status(200).json({ totalProducts });
+  } catch (error) {
+    console.error("Error fetching total products:", error);
+    res.status(500).json({ message: "Failed to fetch total products" });
+  }
+});
+
+
+router.get("/total-vendors", async (req, res) => {
+  try {
+    const totalVendors = await Vendor.count();
+    res.status(200).json({ totalVendors });
+  } catch (error) {
+    console.error("Error fetching total vendors:", error);
+    res.status(500).json({ message: "Failed to fetch total vendors" });
+  }
+});
 
 // Create a product (updated to use vendor_id from session)
 router.post("/create-vendor-product", upload.single("image"), async (req, res) => {
@@ -300,6 +361,8 @@ router.put('/update-stock/:productId', async (req, res) => {
     res.status(500).json({ error: 'Failed to update stock' });
   }
 });
+
+
 
 
 
