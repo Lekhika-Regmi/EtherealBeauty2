@@ -27,18 +27,50 @@
   margin: auto;
   padding: 4.8rem 1rem;
 }
-.logout-message {
+
+/* Base styles for both login and logout messages */
+.login-message, .logout-message {
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  bottom: 20px; /* Positioning at the bottom */
+  right: 20px; /* Align to the right */
+  transform: translateX(50%); /* Center horizontally */
+  padding: 8px 16px;
+  border-radius: 4px;
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
   z-index: 1000;
+  opacity: 0; /* Start invisible */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and sliding */
 }
+
+/* Styles for login message */
+.login-message {
+  background: rgb(65, 156, 65);
+ height: auto;
+}
+
+/* Styles for logout message */
+.logout-message {
+  background: rgb(59, 59, 255);
+ height: auto;
+}
+
+/* Keyframes for slide-in animation */
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%); /* Start below the screen */
+    opacity: 0; /* Start invisible */
+  }
+  100% {
+    transform: translateY(0); /* Slide to normal position */
+    opacity: 1; /* Fade in */
+  }
+}
+
+/* Apply animation to messages */
+.show-message {
+  animation: slideIn 0.5s ease-out forwards; /* Trigger the slideIn animation */
+}
+
 
 .section__header {
   margin-bottom: 1rem;
