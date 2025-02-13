@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getBaseUrl } from "../../utils/baseURL";
+import { useCurrentIds } from "../../features/authHelpers";
+
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState({});
-    const vendorId = 1; // Change dynamically based on auth
+    const { vendorId, role } = useCurrentIds();
+    if (role !== 'vendor') {
+        return <p className="text-center text-gray-500">no vendors </p>;
+      }
+    console.log("vendorId", vendorId);
 
     useEffect(() => {
         const fetchOrders = async () => {

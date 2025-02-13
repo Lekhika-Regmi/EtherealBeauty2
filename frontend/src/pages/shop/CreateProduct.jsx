@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { getBaseUrl } from "../../utils/baseURL";
+import { useCurrentIds } from "../../features/authHelpers";
+
 
 
 const CreateProduct = () => {
+  const { vendorId, role } = useCurrentIds();  // Get vendorId
+
+  console.log("Vendor ID from frontend:", vendorId); // ✅ Debugging
+  
   const [productData, setProductData] = useState({
     name: '',
     description: '',
@@ -17,6 +23,7 @@ const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [preview, setPreview] = useState(null); // For image preview
+ 
 
   // Handle input changes
   const handleChange = (e) => {
@@ -43,14 +50,22 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
+  
+    // Check if the user is a vendor
+    if (role !== 'vendor') {
+      setMessage('You are not authorized to add products.');
+      setIsLoading(false);
+      return;
+    }
+  
     // Check if all required fields are filled in
     if (!productData.name || !productData.description || !productData.price || !productData.category || !productData.skin_type_suitability || !productData.brand || !productData.stock || !productData.image) {
       setMessage('Please fill in all required fields.');
       setIsLoading(false);
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('name', productData.name);
     formData.append('description', productData.description);
@@ -58,27 +73,26 @@ const CreateProduct = () => {
     formData.append('category', productData.category);
     formData.append('skin_type_suitability', productData.skin_type_suitability);
     formData.append('brand', productData.brand);
-    formData.append('stock', productData.stock);  // Include stock in the form data
-
-    // Append the image file to FormData
+    formData.append('stock', productData.stock);
+    formData.append('vendor_id', vendorId);  // ✅ Ensure correct key
+  
     if (productData.image) {
       formData.append('image', productData.image);
     }
-
+  
     const apiUrl = `${getBaseUrl()}/api/products/create-vendor-product`;
+  
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
         body: formData,
       });
-
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setMessage('Product created successfully!');
-
-        // Reset the form fields and image preview after successful submission
+  
         setProductData({
           name: '',
           description: '',
@@ -87,11 +101,10 @@ const CreateProduct = () => {
           skin_type_suitability: '',
           image: null,
           brand: '',
-          stock: '',  // Reset stock
+          stock: '',
         });
-        setPreview(null); // Clear the preview
-
-        // Hide the success message after 5 seconds
+        setPreview(null);
+  
         setTimeout(() => setMessage(''), 5000);
       } else {
         setMessage(data.message || 'Error creating product!');
@@ -103,6 +116,7 @@ const CreateProduct = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">

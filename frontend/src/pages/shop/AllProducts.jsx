@@ -2,26 +2,41 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom"; // Import Link for navigation
 import { getBaseUrl } from "../../utils/baseURL";
+import { useCurrentIds } from "../../features/authHelpers";
+
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
+  const { vendorId, role } = useCurrentIds();
+
+  // Role check संशोधन गर्नुहोस्
+  if (role !== 'vendor') {
+    return <p className="text-center text-gray-500">no vendors </p>;
+  }
+
   useEffect(() => {
     const fetchProducts = async () => {
       const apiUrl = `${getBaseUrl()}/api/products/display_vendor_products`;
-
+      
       try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(apiUrl, {
+          params: {
+            vendorId: vendorId 
+          }
+        });
         setProducts(response.data);
       } catch (err) {
-        setError("Error fetching products");
-        console.error("Error fetching products from db:", err);
+        setError("unable to fetch the data ");
+        console.error("त्रुटि:", err);
       }
     };
 
-    fetchProducts();
-  }, []);
+    if (vendorId) { 
+      fetchProducts();
+    }
+  }, [vendorId]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">

@@ -39,6 +39,7 @@ const getVendorOrders = async (req, res) => {
           attributes: ['name', 'price', 'image']
         }
       ],
+
       attributes: ['order_item_id', 'quantity', 'subtotal', 'status'], // Add status here
 
       order: [['order', 'created_at', 'DESC']]

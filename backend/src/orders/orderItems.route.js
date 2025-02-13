@@ -19,11 +19,15 @@ router.put('/:orderItemId/status', async (req, res) => {
       console.log(`Updating status of OrderItem ${orderItemId} to ${status}`);
 
       // ✅ Check if order item exists
-      const orderItem = await OrderItem.findByPk(orderItemId);
+      const orderItem = await OrderItem.findByPk(orderItemId, {
+        attributes: { exclude: ["id"] },
+      });
+
       if (!orderItem) {
-          console.log(`OrderItem ${orderItemId} not found`);
-          return res.status(404).json({ error: "Order item not found." });
+        console.log(`OrderItem ${orderItemId} not found`);
+        return res.status(404).json({ error: "Order item not found." });
       }
+      
 
       // ✅ Update OrderItem status
       await OrderItem.update({ status }, { where: { order_item_id: orderItemId } });
@@ -31,20 +35,31 @@ router.put('/:orderItemId/status', async (req, res) => {
       console.log(`OrderItem ${orderItemId} status updated successfully`);
 
       // ✅ Auto-update the order status based on all related order items
-      const orderItems = await OrderItem.findAll({ where: { order_id: orderItem.order_id } });
-      const statuses = orderItems.map(item => item.status);
+     // Update OrderItem status
+await OrderItem.update({ status }, { where: { order_item_id: orderItemId } });
 
-      let newOrderStatus;
-      if (statuses.every(s => s === "delivered")) {
-          newOrderStatus = "delivered";
-      } else if (statuses.some(s => s === "processing")) {
-          newOrderStatus = "processing";
-      } else {
-          newOrderStatus = "pending";
-      }
+console.log(`OrderItem ${orderItemId} status updated successfully`);
 
-      console.log(`Updating Order ${orderItem.order_id} status to ${newOrderStatus}`);
-      await Order.update({ status: newOrderStatus }, { where: { order_id: orderItem.order_id } });
+// Auto-update the order status based on all related order items
+const orderItems = await OrderItem.findAll({
+  where: { order_id: orderItem.order_id },
+  attributes: { exclude: ["id"] }
+});
+const statuses = orderItems.map(item => item.status);
+
+let newOrderStatus;
+if (statuses.every(s => s === "delivered")) {
+  newOrderStatus = "delivered";
+} else if (statuses.some(s => s === "processing")) {
+  newOrderStatus = "processing";
+} else {
+  newOrderStatus = "pending";
+}
+
+console.log(`Updating Order ${orderItem.order_id} status to ${newOrderStatus}`);
+await Order.update({ status: newOrderStatus }, { where: { order_id: orderItem.order_id } });
+
+res.json({ message: "Order item status updated successfully." });
 
       res.json({ message: "Order item status updated successfully." });
 

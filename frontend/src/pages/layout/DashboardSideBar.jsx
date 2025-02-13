@@ -12,7 +12,7 @@ const DashboardSideBar = ({ active }) => {
         <div className="w-[250px] h-[100vh] bg-pink-200 text-black shadow-md sticky top-0 left-0 z-10">
             {/* single item */}
             <div className="w-full flex items-center p-4">
-                <Link to="/vendor/Dashboard" className="w-full flex items-center gap-2">
+                <Link to="/vendor/dashboard-content" className="w-full flex items-center gap-2">
                     <RxDashboard size={30}
                         color={'${active === 1 ? "crimson" : "#555"}'} />
                     <h5

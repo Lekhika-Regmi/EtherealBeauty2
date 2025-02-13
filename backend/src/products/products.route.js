@@ -4,6 +4,8 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const { Op } = require("sequelize");
+const verifyToken = require("../middleware/authMiddleware");
+
 
 
 // Set up multer storage
@@ -67,8 +69,10 @@ router.get("/allProducts", async (req, res) => {
 // Fetch all products (with vendor_id = 1)
 router.get('/display_vendor_products', async (req, res) => {
   try {
-    const products = await Product.findAll({
-      where: { vendor_id: 1 }  // Filter by vendor ID 1
+    const { vendorId } = req.query;
+    
+    const products = await Product.findAll({ 
+      where: { vendor_id: vendorId } 
     });
 
     const productsWithImages = products.map(product => {
@@ -89,10 +93,20 @@ router.get('/display_vendor_products', async (req, res) => {
 
 router.get("/total-vendor-products", async (req, res) => {
   try {
-    const vendorId = 1;  // Assuming vendor_id is always 1 for now
+    console.log("Received query:", req.query); // Debug log
+    const vendorId = req.query.vendorId; // Correct way to get vendorId
+
+    if (!vendorId) {
+      console.log("Vendor ID missing");
+      return res.status(400).json({ message: "Vendor ID is required" });
+    }
+
     const totalProducts = await Product.count({
-      where: { vendor_id: vendorId }  // Count only products for this vendor
+      where: { vendor_id: vendorId }
     });
+
+    console.log(`Total products for vendor ${vendorId}:`, totalProducts); // Debug log
+
     res.status(200).json({ totalProducts });
   } catch (error) {
     console.error("Error fetching total products:", error);
@@ -105,7 +119,7 @@ router.get("/total-vendor-products", async (req, res) => {
 router.post("/create-vendor-product", upload.single("image"), async (req, res) => {
   try {
     // Retrieve vendor_id from session
-    const vendor_id = "1"; // Replace with the actual vendor ID if needed
+    const vendorId = req.body.vendor_id;  // ✅ Ensure correct key
 
 
     const imageUrl = req.file ? `/uploads/products/${req.file.filename}` : null; // Get the file path
@@ -120,7 +134,7 @@ router.post("/create-vendor-product", upload.single("image"), async (req, res) =
       brand: req.body.brand,
       stock: req.body.stock,
       image: imageUrl, // Store the image URL in the database
-      vendor_id: vendor_id, // Set vendor_id from session
+      vendor_id: vendorId, // Set vendor_id from session
     });
     res.status(201).json(newProduct); // Respond with the created product
   } catch (error) {
