@@ -1,0 +1,135 @@
+/* General Page Styling */
+  
+  /* AQI Data Card */
+  .aqi-card-aqi {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .aqi-card-aqi h2 {
+    font-size: 25px;
+    color: #c34f4f;
+    margin-bottom: 10px;
+  }
+  
+  .aqi-card-aqi p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  /* Error & Loading Text */
+  .error-text-aqi {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .loading-text-aqi {
+    color: #f44e96;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Skin Health Section */
+  .skin-health-section-aqi {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .skin-health-section-aqi h2 {
+    font-size: 24px;
+    color: #e665a1;
+    margin-bottom: 15px;
+  }
+  
+  .skin-health-section-aqi p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  /* Styled Tables */
+  .styled-table-aqi {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 20px;
+    padding: 10px;
+    font-size: 20px;
+    text-align: left;
+    border-radius: 9px;
+    overflow: hidden;
+        padding: 10px;
+  }
+  
+  .styled-table-aqi th, .styled-table td {
+    margin: 1%;
+    padding: 20px 50px;
+    border: 1px solid #ddd;
+  }
+  .styled-table td {
+    
+    padding: 20px 50px;
+    margin: 10px;
+    border: 1px solid #ddd;
+  }
+  .small-image {
+    width: 300px; /* Adjust size as needed */
+    height: auto;
+
+    text-align: center;
+    align-items: center;
+  }
+  .img-aqi{
+    display: flex;            /* Enables flexbox */
+    justify-content: center;  /* Centers the image horizontally */
+    align-items: center;      /* Centers the image vertically */
+    width: 100%;              /* Ensures the container takes full width */
+    height: auto;  
+    padding: 2%
+
+  }
+  
+  .styled-table-aqi thead {
+    background-color: rgb(33, 33, 33);
+    
+    color: #ffffff;
+  }
+  
+  .styled-table-aqi tbody tr:nth-child(even) {
+    padding: 10px;
+    background-color: #f2f2f2;
+  }
+  
+  .styled-table-aqi tbody tr:hover {
+    background-color: #eaeaea;
+    padding: 10px;
+  }
+  
+  /* Styled List */
+  .styled-list-aqi {
+    list-style: none;
+    padding: 10px;
+  }
+  
+  .styled-list-aqi li {
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    margin: 10px 5px;
+    font-size: 17px;
+  }
+  
+  .styled-list-aqi li::before {
+    content: "✔";
+    color: #27ae60;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
