@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("./users.model");
 const verifyToken = require("../middleware/authMiddleware"); // Import middleware
+const Customer = require("./customer/customers.model");
+const Vendor = require("./vendor/vendors.model");
 
 const router = express.Router();
 
@@ -18,7 +20,8 @@ router.post("/login", async (req, res) => {
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
     // Generate JWT token
     const token = jwt.sign(
@@ -35,10 +38,24 @@ router.post("/login", async (req, res) => {
       maxAge: 60 * 60 * 1000, // 1 hour
     });
 
+    //=========to get associated vendor id and customer id===================================
+    // Get associated customer/vendor ID
+    let associatedId = null;
+    if (user.role === "customer") {
+      const customer = await Customer.findOne({ where: { user_id: user.id } });
+      console.log("Customer record:", customer); // Debug log
+      associatedId = customer?.id;
+    }
+    else if (user.role === "vendor") {
+      const vendor = await Vendor.findOne({ where: { user_id: user.id } });
+      associatedId = vendor?.id;
+    }
+    console.log("associatedId", associatedId);
+
     res.status(200).json({
       message: "Login successful",
       token,
-      user: { id: user.id, email: user.email, role: user.role },
+      user: { id: user.id, email: user.email, role: user.role,  associatedId },
     });
   } catch (error) {
     console.error(error);

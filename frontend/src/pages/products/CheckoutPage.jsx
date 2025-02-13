@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useCurrentIds } from '../../features/authHelpers';
 import { useCreateOrderMutation } from "../../features/orders/orderApi";
 import paymentApi from "../../features/orders/paymentApi"
 import AddressSelector from "./AddressSelector";
@@ -16,7 +17,7 @@ const [municipality, setMunicipality] = useState("");
 const [additionalInfo, setAdditionalInfo] = useState("");
 const [payment_method, setPaymentMethod] = useState("Khalti");
 const [orderPlaced, setOrderPlaced] = useState(false);
-
+const { customerId, role } = useCurrentIds();
   const navigate = useNavigate();
   const products = useSelector((store) => store.cart.products);
 
@@ -27,10 +28,14 @@ const [orderPlaced, setOrderPlaced] = useState(false);
   }, []);
 
   const handlePlaceOrder = async () => {
+
     console.log("➡️ handlePlaceOrder triggered!");
-  
+    if (role !== 'customer') {
+      alert('Please login as customer');
+      return;
+    }
     const orderData = {
-      customer_id: user.id,
+      customer_id: customerId,
       total_price: grandTotal,
       payment_method,
       address: {

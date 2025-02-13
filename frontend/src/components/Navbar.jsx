@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate ,useLocation} from "react-router-dom";
 import CartModel from "../pages/products/CartModel";
 import { logout } from "../auth/authSlice"; // Your logout action
 import { clearCart } from "../features/cart/cartSlice"; // Ensure you have a clearCart action
@@ -13,7 +13,13 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dropdownRef = useRef(null); // Ref for dropdown container
+
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [location]);
 
   const handleLogout = () => {
     // If there are items in the cart, ask for confirmation before logging out.
@@ -31,6 +37,7 @@ const Navbar = () => {
     // Log out the user.
     dispatch(logout());
     localStorage.removeItem("token");
+    setIsDropdownOpen(false);
     navigate("/login");
   };
 
@@ -49,6 +56,7 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen]);
+
 
   return (
     <header className="fixed-nav-bar w-nav">
@@ -98,6 +106,7 @@ const Navbar = () => {
                 {!user ? (
                   <Link
                     to="/login"
+                    onClick={() => setIsDropdownOpen(false)} 
                     className="block px-4 py-2 text-black hover:bg-gray-100"
                   >
                     Login
@@ -106,6 +115,7 @@ const Navbar = () => {
                   <>
                     <Link
                       to="/orders"
+                      onClick={() => setIsDropdownOpen(false)} 
                       className="block px-4 py-2 text-black hover:bg-gray-100"
                     >
                       Orders

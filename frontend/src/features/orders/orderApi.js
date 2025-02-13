@@ -35,6 +35,9 @@ const orderApi = createApi({
         body: orderData,
       }),
       invalidatesTags: ["Order"],
+      transformErrorResponse: (response) => {
+        return response.data?.error || 'Order creation failed';
+      }
     }),
     getCustomerOrders: builder.query({
       query: (customerId) => ({

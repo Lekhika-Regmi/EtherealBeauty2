@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require("./orders.model");
 const OrderItem = require("./orderItems.model");
 const sequelize = require('../database/db.config'); // Adjust path if necessary
+const Product= require('../products/products.model');
 
 //const authenticate = require("../middleware/authenticate"); // Assuming JWT-based auth middleware
 const authenticate = (req, res, next) => {
@@ -56,6 +57,7 @@ router.post(
     body("products.*.price").isFloat({ min: 0.01 }).withMessage("Price must be valid"),
   
   ], async (req, res) => {
+    console.log("Received order creation request for customer_id:", req.body.customer_id);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

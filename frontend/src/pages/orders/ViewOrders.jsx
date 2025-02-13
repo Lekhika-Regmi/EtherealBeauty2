@@ -1,19 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux"; // Import useSelector
+import { useCurrentIds } from "../../features/authHelpers"; // adjust path if needed
 import { useGetCustomerOrdersQuery } from "../../features/orders/orderApi";
 import { useFetchAllProductsQuery } from "../../features/products/productsApi";
 
 const ViewOrders = () => {
-  // Get the authenticated user from Redux
-  const { user } = useSelector((state) => state.auth);
-  
-  // If no user is logged in, display a message
-  if (!user) {
-    return <p className="text-center text-gray-500">Please log in to view your orders.</p>;
+  // Get the associated customerId from your auth state
+  const { customerId, role } = useCurrentIds();
+
+  // If there's no associated customerId (or if the logged-in user is not a customer), show a message
+  if (!customerId || role !== "customer") {
+    return <p className="text-center text-gray-500">Please log in as a customer to view your orders.</p>;
   }
-  
-  // Use the authenticated user's ID (adjust the property name if needed)
-  const customerId = user.id;
 
   // Fetch orders using the customerId from the auth state
   const { data: orders, error, isLoading } = useGetCustomerOrdersQuery(customerId);
