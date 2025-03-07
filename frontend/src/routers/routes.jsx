@@ -28,15 +28,16 @@ const routes = {
   superadmin: {
     dashboard: "/superadmin/dashboard",
     products: "/superadmin/products",
-    vendors: "/superadmin/vendors",
+    vendors: "/superadmin/vendors/approved",
     customers: "/superadmin/customers",
-    inventory: "/superadmin/inventory",
-    reports: "/superadmin/reports",
+    inventory: "/superadmin/vendors/pending",
+    //reports: "/superadmin/reports",
     orders: "/superadmin/orders",
     settings: "/superadmin/settings",
-    pendingVendors: "/superadmin/vendors/pending",
-    approvedVendors: "/superadmin/vendors/approved"
+    // pendingVendors: "/superadmin/vendors/pending",
+    // approvedVendors: "/superadmin/vendors/approved"
   }
+
 };
 
 export default routes;

@@ -41,9 +41,7 @@ const App = () => {
   return (
     <>
       {isSuperAdminPage ? (
-        <SuperAdminLayout>
           <AppRouter />
-        </SuperAdminLayout>
       ) : (
         <>
           {isVendorPage ? <VendorNavbar /> : <Navbar />}

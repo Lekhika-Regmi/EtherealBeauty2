@@ -9,6 +9,8 @@ const Dashboard = () => {
   const [totalCustomers, setTotalCustomers] = useState(null); // Added state for total customers
   const [error, setError] = useState(null);
 
+  console.log("I'm Rendered at Dashboard"); 
+
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {

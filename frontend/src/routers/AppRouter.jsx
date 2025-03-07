@@ -61,13 +61,13 @@ const AppRouter = () => {
       {/* Authentication Routes */}
       <Route element={<PublicRoute />}>
         <Route path={routes.login} element={<Login />} />
-       
+
         <Route path={routes.register} element={<Register />}>
           <Route path="customer" element={<CustomerReg />} />
           <Route path="vendor" element={<VendorReg />} />
         </Route>
       </Route>
-      
+
 
       {/* Customer Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["customer"]} />}>
@@ -75,23 +75,18 @@ const AppRouter = () => {
         <Route path={routes.orders} element={<ViewOrders />} />
       </Route>
 
-        {/* Super Admin Routes */}
-  <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}>
-  <Route element={<SuperAdminLayout />}>
-    <Route path={routes.superadmin.dashboard} element={<Dashboard />} />
-    <Route path={routes.superadmin.products} element={<Aproducts />} />
-    <Route path={routes.superadmin.customers} element={<Customers />} />
-   
-    {/* Vendor Management Routes */}
-    <Route path={routes.superadmin.pendingVendors} element={<Vendors />} />
-    <Route path={routes.superadmin.approvedVendors} element={<ApprovedVendors />} />
-
-    <Route path={routes.superadmin.orders} element={<SuperOrders />} />
-    {/* <Route path={routes.superadmin.settings} element={<Settings />} /> */}
-  </Route>
+      {/* <Route element={<PrivateRoute allowedRoles={["superadmin"]} />}> */}
+        <Route element={<SuperAdminLayout />}>
+          <Route path={routes.superadmin.dashboard} element={<Dashboard />} />
+          <Route path={routes.superadmin.products} element={<Aproducts />} />
+          <Route path={routes.superadmin.customers} element={<Customers />} />
+          <Route path={routes.superadmin.pendingVendors} element={<Vendors />} />
+          <Route path={routes.superadmin.approvedVendors} element={<ApprovedVendors />} />
+          <Route path={routes.superadmin.orders} element={<SuperOrders />} />
+        </Route>
+      {/* </Route> */}
 
 
- </Route>
       {/* Vendor Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["vendor"]} />}>
         <Route path={routes.vendor} element={<Vendor />} />

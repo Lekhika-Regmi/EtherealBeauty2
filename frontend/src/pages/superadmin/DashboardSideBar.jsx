@@ -13,7 +13,7 @@ const DashboardSideBar = ({ active }) => {
         <div className="w-[250px] h-[100vh] bg-pink-200 text-black shadow-md sticky top-0 left-0 z-10">
             {/* single item */}
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.dashboard} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/dashboard" className="w-full flex items-center gap-2">
                     <RxDashboard size={30}
                         color={'${active === 1 ? "crimson" : "#555"}'} />
                     <h5
@@ -25,8 +25,9 @@ const DashboardSideBar = ({ active }) => {
                 </Link>
             </div>
 
+
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.orders} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/orders" className="w-full flex items-center gap-2">
                     <FaShoppingBag size={30}
                         color={'${active === 2 ? "crimson" : "#555"}'} />
                     <h5
@@ -38,8 +39,9 @@ const DashboardSideBar = ({ active }) => {
                 </Link>
             </div>
 
+
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.products} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/products" className="w-full flex items-center gap-2">
                     <FaBox size={30}
                         color={'${active === 3 ? "crimson" : "#555"}'} />
                     <h5
@@ -52,7 +54,7 @@ const DashboardSideBar = ({ active }) => {
             </div>
 
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.pendingVendors} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/vendors/pending" className="w-full flex items-center gap-2">
                     <AiOutlineFolderAdd size={30}
                         color={'${active === 4? "crimson" : "#555"}'} />
                     <h5
@@ -62,9 +64,10 @@ const DashboardSideBar = ({ active }) => {
                         Pending Vendors
                     </h5>
                 </Link>
+                
             </div>
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.approvedVendors} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/vendors/approved" className="w-full flex items-center gap-2">
                     <CiMoneyBill
                         size={30}
                         color={'${active === 7 ? "crimson" : "#555"}'} />
@@ -78,7 +81,7 @@ const DashboardSideBar = ({ active }) => {
             </div>
 
             <div className="w-full flex items-center p-4">
-            <Link to={routes.superadmin.customers} className="w-full flex items-center gap-2">
+            <Link to="/superadmin/customers" className="w-full flex items-center gap-2">
                     <FaShoppingCart size={30}
                         color={'${active === 5 ? "crimson" : "#555"}'} />
                     <h5
