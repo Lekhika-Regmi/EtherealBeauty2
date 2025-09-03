@@ -1,6 +1,6 @@
-## Ethereal Beauty Preview
+# Ethereal Beauty Preview
 
-# For full website tour visit the link below
+## For full website tour visit the link below
 
 https://drive.google.com/drive/folders/1I4zHIzKcg1SQ_dAM1JEz0Tqmk5TnLgR_
 ---
