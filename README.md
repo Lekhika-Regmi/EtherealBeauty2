@@ -1,6 +1,9 @@
 # Ethereal Beauty Preview
 
-## For full website tour visit the link below
+Ethereal Beauty was created with the goal of simplifying skincare and making it more personalized for users, regardless of their beauty knowledge or background. Ethereal Beauty is an interactive e-commerce website designed to be a one-stop destination for those navigating the often-overwhelming world of skincare.
+
+---
+# For full website tour visit the link below
 
 https://drive.google.com/drive/folders/1I4zHIzKcg1SQ_dAM1JEz0Tqmk5TnLgR_
 ---
