@@ -5,14 +5,22 @@ Ethereal Beauty was created with the goal of simplifying skincare and making it 
 ---
 # For full website tour visit the link below
 
-https://drive.google.com/drive/folders/1I4zHIzKcg1SQ_dAM1JEz0Tqmk5TnLgR_
+[https://drive.google.com/drive/folders/1I4zHIzKcg1SQ_dAM1JEz0Tqmk5TnLgR_]
 ---
 ## Customer Side
 <img width="1897" height="1195" alt="Screenshot 2025-02-13 203454" src="https://github.com/user-attachments/assets/fa238c26-071e-4062-892f-183d804fbb30" />
 
 <img width="1045" height="660" alt="Screenshot 2025-09-03 171432" src="https://github.com/user-attachments/assets/5084fe71-dbaf-4d94-a979-5884705651fe" />
 
+---
 ## Vendor Side
+
+<img width="1044" height="653" alt="Screenshot 2025-09-04 091715" src="https://github.com/user-attachments/assets/64512215-046c-4b14-b9dc-ee6d68eefa19" />
+
+<img width="1042" height="649" alt="Screenshot 2025-09-04 091918" src="https://github.com/user-attachments/assets/d1342ea1-1fa8-46cc-99be-59c27b34995d" />
+
+---
+## Admin Side
 <img width="1920" height="1200" alt="Screenshot 2025-02-13 180358" src="https://github.com/user-attachments/assets/86d3c6a4-c3b6-44a8-938c-2683ac744de8" />
 
 
